@@ -62,12 +62,12 @@ var W,H;
 var HELI_X=120;         // 헬기 고정 X
 var HELI_W=52;          // 헬기 폭
 var HELI_H=26;          // 헬기 높이
-var GRAVITY=0.22;       // 중력
-var LIFT=-0.38;         // 클릭 시 상승력
-var MAX_VY=5.5;           // 최대 수직 속도
+var GRAVITY=0.16;       // 중력
+var LIFT=-0.28;         // 클릭 시 상승력
+var MAX_VY=4.0;           // 최대 수직 속도
 var TUNNEL_W=320;       // 터널 한 세그먼트 폭
 var SEG_COUNT=6;        // 화면에 유지할 세그먼트 수
-var SPEED_PRESETS={low:{base:2.0,inc:0.0003},mid:{base:3.5,inc:0.0006},high:{base:5.5,inc:0.001}};
+var SPEED_PRESETS={low:{base:1.2,inc:0.00012},mid:{base:2.2,inc:0.0003},high:{base:3.8,inc:0.0007}};
 var selectedSpeed='mid';
 var BASE_SPEED=3.5;     // 초기 스크롤 속도
 var SPEED_INC=0.0006;   // 시간당 속도 증가
@@ -106,22 +106,22 @@ function rand(min,max){
 }
 
 var targetGapCenter=0.5; // 터널 중심 비율 (0~1)
-var targetGapSize=0.52;  // 터널 폭 비율
+var targetGapSize=0.62;  // 터널 폭 비율
 var currentGapCenter=0.5;
-var currentGapSize=0.52;
+var currentGapSize=0.62;
 
 function genSegment(x){
   // 부드러운 변이
-  targetGapCenter+=rand(-0.08,0.08);
-  targetGapCenter=Math.max(0.22,Math.min(0.78,targetGapCenter));
+  targetGapCenter+=rand(-0.055,0.055);
+  targetGapCenter=Math.max(0.25,Math.min(0.75,targetGapCenter));
   targetGapSize+=rand(-0.04,0.04);
-  targetGapSize=Math.max(0.24,Math.min(0.56,targetGapSize));
+  targetGapSize=Math.max(0.30,Math.min(0.64,targetGapSize));
   currentGapCenter+=(targetGapCenter-currentGapCenter)*0.35;
   currentGapSize+=(targetGapSize-currentGapSize)*0.35;
 
   // 난이도 반영: 속도 빠를수록 좁아짐
   var diffFactor=Math.min((speed-BASE_SPEED)/4,1);
-  var gs=currentGapSize*(1-diffFactor*0.3);
+  var gs=currentGapSize*(1-diffFactor*0.18);
 
   var topH=(currentGapCenter-gs/2)*H;
   var botH=H-(currentGapCenter+gs/2)*H;
